@@ -3,16 +3,20 @@
     <div
       class="inform row justify-center items-center justify-evenly col-md-12"
     >
-      <div class="flex">
-        <q-img class="logo" src="../assets/imgLogo.png" />
+      <div class="flex col-xs-8 col-sm-5 col-md-3 col-lg-2 col-xl-1">
+        <q-img
+          class="logo full-width"
+          src="../assets/imgLogo.png"
+          style="max-width: 80%"
+        />
 
-        <div class="q-mr-lg col-xs-10 col-sm-8 col-md-3 col-lg-2 col-xl-1">
+        <div class="q-mr-lg col-xs-12 col-sm-10 col-md-3 col-lg-2 col-xl-1">
           <span class="nameproject text-h2 text-weight-bold text-white"
             >ShortLink</span
           >
         </div>
       </div>
-      <div class="col-xs-11 col-sm-8 col-md-3 col-lg-2 col-xl-1">
+      <div class="col-xs-11 col-sm-11 col-md-3 col-lg-2 col-xl-1">
         <CardLogin />
       </div>
     </div>
