@@ -30,11 +30,22 @@
                 label="SHORT"
                 size="lg"
                 class="q-mr-sm"
+                @click="cadastrarUrl"
               /> </template
           ></q-input>
-          <div>
-            {{ shortUrl }}
-          </div>
+          <q-dialog v-model="dialog" persistent>
+            <q-card>
+              <q-card-section class="row items-center">
+                <q-avatar icon="link" color="primary" text-color="white" />Url
+                versão curta
+                <span class="q-ml-sm text-bold"> http://{{ shortUrl }}</span>
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn flat label="OK" color="primary" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
         </q-card>
       </div>
     </div>
@@ -71,11 +82,15 @@
 
 <script>
 import CardImg from "src/components/LoginPage/CardImg.vue";
-import { ref } from "vue";
-
+import { ref, reactive, onMounted } from "vue";
+import axios from "axios";
 export default {
   name: "IndexPage",
   setup() {
+    const url = ref("");
+    const count = ref(0);
+    const shortUrl = ref("");
+
     let img1 = ref(
       "https://i.pinimg.com/564x/01/c5/3a/01c53a8a5fca75f0ce72eb97d465be81.jpg"
     );
@@ -88,17 +103,36 @@ export default {
     let text1 = ref("URL's extremamente Curtas");
     let text2 = ref("Faça quantas URL's quiser gratuitamente");
     let text3 = ref(" Reponsivo para qualquer tipo de dispositivo");
-    let url = ref("");
-    let shortUrl = ref("");
+    let link = ref("");
+    let dialog = ref(false);
+
+    const cadastrarUrl = async () => {
+      try {
+        const response = await axios.post("http://localhost:3000/url", {
+          link: url.value,
+          count: count.value,
+        });
+        shortUrl.value = response.data.url.shortUrl;
+        console.log(response.data.url.shortUrl);
+        dialog.value = true;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     return {
       url,
-      shortUrl,
+      count,
+      cadastrarUrl,
+      link,
       img1,
       img2,
       img3,
       text1,
       text2,
       text3,
+      shortUrl,
+      dialog,
     };
   },
   components: { CardImg },

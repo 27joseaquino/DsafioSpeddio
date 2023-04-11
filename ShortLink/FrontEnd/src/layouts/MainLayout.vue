@@ -14,7 +14,7 @@
               ShortLink
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6 col-md-2">
+          <div class="col-xs-6 col-sm-6 col-md-3">
             <q-tabs align="left" class="hidden-on-mobile">
               <q-route-tab to="/" class="text-weight-thin">Home</q-route-tab>
               <q-route-tab to="/classificacao" class="text-weight-thin"

@@ -4,7 +4,7 @@
     <div class="col row justify-center">
       <q-card class="col-11">
         <PositionsRanking
-          v-for="(url, index) in Urls"
+          v-for="(url, index) in state.urls"
           :key="index"
           :position="index"
           :url="url"
@@ -15,24 +15,32 @@
 </template>
 <script>
 import PositionsRanking from "../components/RankinPage/PositionsRanking.vue";
-import { ref } from "vue";
+import { ref, onMounted, reactive } from "vue";
+import axios from "axios";
+
 export default {
   components: { PositionsRanking },
 
   setup() {
-    let Urls = ref([
-      { urlName: "google.com", acess: 20 },
-      { urlName: "facebook.com", acess: 15 },
-      { urlName: "insta.com", acess: 14 },
-      { urlName: "whats.com", acess: 20 },
-      { urlName: "youtube.com", acess: 20 },
-      { urlName: "calw.com", acess: 20 },
-      { urlName: "canal2.com", acess: 20 },
-      { urlName: "canal5.com", acess: 20 },
-      { urlName: "cal89.com", acess: 20 },
-    ]);
+    const state = reactive({
+      urls: [],
+    });
 
-    return { Urls };
+    const getRanking = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/url");
+        state.urls = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    onMounted(() => {
+      getRanking();
+      setInterval(getRanking, 10000);
+    });
+
+    return { state };
   },
 };
 </script>
