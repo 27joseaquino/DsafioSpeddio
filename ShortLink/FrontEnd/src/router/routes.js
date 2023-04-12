@@ -8,7 +8,7 @@ const routes = [
     ]
   },
   {
-    path: '/entre-ou-cadastre',
+    path: '/entrar',
     component: () => import('layouts/loginLayout.vue'),
     children: [
       { path: '', component: () => import('pages/LoginPage.vue') }

@@ -16,14 +16,12 @@
       <q-tab-panel name="login">
         <q-card-section>
           <q-input
-            color="teal"
             outlined
             v-model="user.emailInput"
             label="Email"
             class="q-pb-md"
           />
           <q-input
-            color="teal"
             outlined
             v-model="user.passwordInput"
             :type="isPwd ? 'password' : 'text'"
@@ -52,21 +50,18 @@
       <q-tab-panel name="cadastro">
         <q-card-section>
           <q-input
-            color="teal"
             outlined
             v-model="user.nameInput"
             label="Nome"
             class="q-pb-sm"
           />
           <q-input
-            color="teal"
             outlined
             v-model="user.emailInput"
             label="Email"
             class="q-pb-sm"
           />
           <q-input
-            color="teal"
             outlined
             v-model="user.passwordInput"
             :type="isPwd ? 'password' : 'text'"

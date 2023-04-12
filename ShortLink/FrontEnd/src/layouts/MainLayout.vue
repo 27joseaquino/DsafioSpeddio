@@ -16,15 +16,12 @@
           </div>
           <div class="col-xs-6 col-sm-6 col-md-3">
             <q-tabs align="left" class="hidden-on-mobile">
-              <q-route-tab to="/" class="text-weight-thin">Home</q-route-tab>
+              <q-route-tab to="/" class="text-weight-thin">Inicio</q-route-tab>
               <q-route-tab to="/classificacao" class="text-weight-thin"
                 >Top 100</q-route-tab
               >
-              <q-route-tab
-                to="/entre-ou-cadastre"
-                v-if="enable"
-                class="text-weight-thin"
-                >Sing-in</q-route-tab
+              <q-route-tab to="/entrar" v-if="enable" class="text-weight-thin"
+                >Entrar</q-route-tab
               >
               <q-route-tab
                 v-if="disable"
@@ -43,20 +40,15 @@
           >
             <q-list dense style="min-width: 100px">
               <q-item to="/" clickable v-close-popup>
-                <q-item-section to="/">Home</q-item-section>
+                <q-item-section to="/">Inicio</q-item-section>
               </q-item>
               <q-item to="/classificacao" clickable v-close-popup>
                 <q-item-section>Top 100</q-item-section>
               </q-item>
               <q-separator />
 
-              <q-item
-                to="/entre-ou-cadastre"
-                v-if="enable"
-                clickable
-                v-close-popup
-              >
-                <q-item-section>Sing-in</q-item-section>
+              <q-item to="/entrar" v-if="enable" clickable v-close-popup>
+                <q-item-section>Entrar</q-item-section>
               </q-item>
               <q-item v-if="disable" clickable v-close-popup @click="logout">
                 <q-item-section>Sair</q-item-section>
@@ -95,7 +87,7 @@ export default {
 
     function logout() {
       $store.commit("user/logoutMutation");
-      router.push("/entre-ou-cadastre");
+      router.push("/entrar");
     }
     return {
       token,

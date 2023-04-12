@@ -1,8 +1,8 @@
 <template>
   <q-page class="column">
-    <div class="col-1 text-h4 text-bold text-center q-mt-md">Ranking</div>
+    <div class="col-1 text-h4 text-bold text-center q-mt-lg">Ranking</div>
     <div class="col-11 row justify-center">
-      <q-card class="col-11">
+      <q-card class="q-mt-lg col-11">
         <PositionsRanking
           v-for="(url, index) in data.urls"
           :key="index"
