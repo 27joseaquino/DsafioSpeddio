@@ -3,7 +3,7 @@
     <q-tabs class="tabs" v-model="tab">
       <q-tab label="Login" name="login" class="bg-primary" />
 
-      <q-tab label="Cadastro" name="cadastro" class="bg-primary" />
+      <q-tab label="Cadastro" name="register" class="bg-primary" />
     </q-tabs>
     <q-tab-panels
       v-model="tab"
@@ -47,7 +47,7 @@
         </q-card-section>
       </q-tab-panel>
 
-      <q-tab-panel name="cadastro">
+      <q-tab-panel name="register">
         <q-card-section>
           <q-input
             outlined
@@ -136,9 +136,11 @@ export default {
         router.push("/");
       }
     }
+
     function register() {
       $store.dispatch("user/registerAction", user);
     }
+
     return {
       user,
       isPwd,

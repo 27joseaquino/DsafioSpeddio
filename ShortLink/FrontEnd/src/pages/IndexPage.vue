@@ -9,7 +9,6 @@
             class="text-center text-bold text-h4 q-mb-md"
             style="font-family: Times New Roman, Times, serif"
           >
-            <!-- style="font-family: Merriweather" -->
             Copie e cole a URL para ser encurtada
           </div>
 
@@ -148,9 +147,3 @@ export default {
   components: { CardImg },
 };
 </script>
-<style scoped>
-@font-face {
-  font-family: tnrs;
-  src: url(../assets/fonts/Merriweather/Merriweather-BlackItalic.ttf);
-}
-</style>
