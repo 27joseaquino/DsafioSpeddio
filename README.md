@@ -39,4 +39,7 @@ Algumas partes do código que poderiam ser melhoradas com mais tempo disponível
 # Features que ficaram de fora
 
 - Usuarios registrados podem deletar urls criadas por eles mesmos.
- - Testes unitários e e2e
+- Testes unitários e e2e
+ 
+ # Vídeo de explicação da aplicação.
+ https://share.vidyard.com/watch/qNCYH7mPqQNDr3ecZfo8nr?
