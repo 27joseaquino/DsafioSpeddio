@@ -22,7 +22,6 @@ Para executar o projeto, siga os seguintes passos:
 
 - Faça o clone do repositório.
 - Instale as dependências do projeto executando o comando npm init para back e yarn para o front.
-- Certifique-se de que o MongoDB esteja em execução na porta padrão (27017).
 - Execute o comando npm run dev para iniciar o servidor de desenvolvimento.
 - Execute o comando yarn quasar dev para iniciar o frontend.
 
@@ -42,4 +41,6 @@ Algumas partes do código que poderiam ser melhoradas com mais tempo disponível
 - Testes unitários e e2e
  
  # Vídeo de explicação da aplicação.
+ - obs: Dados sensíveis estão expostos no backend pq ñ utilizei o .env e o git ignore com o intuito de agilizar o teste do projeto. 
  https://share.vidyard.com/watch/qNCYH7mPqQNDr3ecZfo8nr?
+ 
