@@ -9,7 +9,7 @@
             </div>
             <div
               class="col-xs-6 col-sm-6 col-md-11 text-h4"
-              style="font-family: 'Times New Roman', Times, serif"
+              style="font-family: Times New Roman, Times, serif"
             >
               ShortLink
             </div>
@@ -27,9 +27,9 @@
                 >Sing-in</q-route-tab
               >
               <q-route-tab
-                to="/entre-ou-cadastre"
                 v-if="disable"
                 class="text-weight-thin"
+                @click="logout"
                 >Sair</q-route-tab
               >
             </q-tabs>
@@ -58,12 +58,7 @@
               >
                 <q-item-section>Sing-in</q-item-section>
               </q-item>
-              <q-item
-                to="/entre-ou-cadastre"
-                v-if="disable"
-                clickable
-                v-close-popup
-              >
+              <q-item v-if="disable" clickable v-close-popup @click="logout">
                 <q-item-section>Sair</q-item-section>
               </q-item>
             </q-list>
@@ -81,9 +76,12 @@
 <script>
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const $store = useStore();
+    const router = useRouter();
+
     let token = ref("");
     let disable = ref(false);
     let enable = ref(true);
@@ -94,10 +92,16 @@ export default {
       disable.value = true;
       enable.value = false;
     }
+
+    function logout() {
+      $store.commit("user/logoutMutation");
+      router.push("/entre-ou-cadastre");
+    }
     return {
       token,
       disable,
       enable,
+      logout,
     };
   },
 };

@@ -6,6 +6,6 @@ export function setTokenMutation(state, token) {
 }
 
 export function logoutMutation(state) {
-  state.data = '',
-    state.token = ''
+  state.data = ''
+  state.token = ''
 }

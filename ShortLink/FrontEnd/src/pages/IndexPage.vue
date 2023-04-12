@@ -15,7 +15,7 @@
 
           <q-input
             icon="link"
-            v-model="url"
+            v-model="url.link"
             standout="bg-dark"
             bg-color="dark"
             label-color="white"
@@ -82,7 +82,7 @@
 
 <script>
 import CardImg from "src/components/LoginPage/CardImg.vue";
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import { useStore } from "vuex";
 import axios from "axios";
 
@@ -90,7 +90,10 @@ export default {
   name: "IndexPage",
   setup() {
     const $store = useStore();
-    const url = ref("");
+    const url = reactive({
+      link: "",
+      token: "",
+    });
 
     let img1 = ref(
       "https://i.pinimg.com/564x/01/c5/3a/01c53a8a5fca75f0ce72eb97d465be81.jpg"
@@ -104,10 +107,13 @@ export default {
     let text1 = ref("URL's extremamente Curtas");
     let text2 = ref("Faça quantas URL's quiser gratuitamente");
     let text3 = ref(" Reponsivo para qualquer tipo de dispositivo");
-    let link = ref("");
     let dialog = ref(false);
     let isUrl = ref(false);
     let shortUrl = ref("");
+
+    url.token = computed({
+      get: () => $store.state.user.token,
+    });
 
     function registerUrl() {
       $store.dispatch("url/shortAction", url);
@@ -123,7 +129,6 @@ export default {
     return {
       url,
       registerUrl,
-      link,
       img1,
       img2,
       img3,
