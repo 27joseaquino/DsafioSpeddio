@@ -6,8 +6,8 @@
       >
         <q-card class="col-xs-12 col-sm-12 col-md-10">
           <div
-            class="text-center text-h4 q-mb-md"
-            style="font-family: Merriweather"
+            class="text-center text-bold text-h4 q-mb-md"
+            style="font-family: Times New Roman, Times, serif"
           >
             <!-- style="font-family: Merriweather" -->
             Copie e cole a URL para ser encurtada
@@ -15,7 +15,7 @@
 
           <q-input
             icon="link"
-            v-model="url"
+            v-model="url.link"
             standout="bg-dark"
             bg-color="dark"
             label-color="white"
@@ -30,17 +30,37 @@
                 label="SHORT"
                 size="lg"
                 class="q-mr-sm"
+                @click="registerUrl"
               /> </template
           ></q-input>
-          <div>
-            {{ shortUrl }}
-          </div>
+          <q-dialog v-model="dialog" persistent>
+            <q-card>
+              <q-card-section class="column items-center">
+                <q-avatar
+                  class="q-mb-md"
+                  icon="link"
+                  color="primary"
+                  text-color="white"
+                />Url versão curta
+                <span class="q-ml-sm text-bold col">
+                  http://localhost:3000/{{ shortUrl }}</span
+                >
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn flat label="OK" color="primary" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
         </q-card>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
-        <div class="text-h5 text-bold q-mb-sm flex flex-center">
+        <div
+          class="text-h5 text-bold q-mb-sm flex flex-center"
+          style="font-family: Times New Roman, Times, serif"
+        >
           Encurte e Compartilhe
         </div>
         <div class="text-body1 flex flex-center">
@@ -71,11 +91,18 @@
 
 <script>
 import CardImg from "src/components/LoginPage/CardImg.vue";
-import { ref } from "vue";
+import { ref, computed, reactive } from "vue";
+import { useStore } from "vuex";
 
 export default {
   name: "IndexPage",
   setup() {
+    const $store = useStore();
+    const url = reactive({
+      link: "",
+      token: "",
+    });
+
     let img1 = ref(
       "https://i.pinimg.com/564x/01/c5/3a/01c53a8a5fca75f0ce72eb97d465be81.jpg"
     );
@@ -88,17 +115,34 @@ export default {
     let text1 = ref("URL's extremamente Curtas");
     let text2 = ref("Faça quantas URL's quiser gratuitamente");
     let text3 = ref(" Reponsivo para qualquer tipo de dispositivo");
-    let url = ref("");
-    let shortUrl = ref("");
+    let dialog = ref(false);
+
+    url.token = computed({
+      get: () => $store.state.user.token,
+    });
+    let shortUrl = computed({
+      get: () => $store.state.url.shortUrl.short,
+    });
+    let isUrl = computed({
+      get: () => $store.state.url.shortUrl.isUrl,
+    });
+    async function registerUrl() {
+      await $store.dispatch("url/shortAction", url);
+
+      dialog.value = isUrl.value;
+    }
+
     return {
       url,
-      shortUrl,
+      registerUrl,
       img1,
       img2,
       img3,
       text1,
       text2,
       text3,
+      shortUrl,
+      dialog,
     };
   },
   components: { CardImg },
@@ -106,7 +150,7 @@ export default {
 </script>
 <style scoped>
 @font-face {
-  font-family: Merriweather;
+  font-family: tnrs;
   src: url(../assets/fonts/Merriweather/Merriweather-BlackItalic.ttf);
 }
 </style>

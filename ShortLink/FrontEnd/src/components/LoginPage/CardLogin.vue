@@ -18,14 +18,14 @@
           <q-input
             color="teal"
             outlined
-            v-model="email"
+            v-model="user.emailInput"
             label="Email"
             class="q-pb-md"
           />
           <q-input
             color="teal"
             outlined
-            v-model="password"
+            v-model="user.passwordInput"
             :type="isPwd ? 'password' : 'text'"
             label="Senha"
           >
@@ -39,7 +39,13 @@
           </q-input>
         </q-card-section>
         <q-card-section class="row justify-center q-pa-none q-pb-md">
-          <q-btn rounded color="primary" class="col-10" label="Entrar" />
+          <q-btn
+            rounded
+            color="primary"
+            @click="login()"
+            class="col-10"
+            label="Entrar"
+          />
         </q-card-section>
       </q-tab-panel>
 
@@ -48,21 +54,21 @@
           <q-input
             color="teal"
             outlined
-            v-model="name"
+            v-model="user.nameInput"
             label="Nome"
             class="q-pb-sm"
           />
           <q-input
             color="teal"
             outlined
-            v-model="email"
+            v-model="user.emailInput"
             label="Email"
             class="q-pb-sm"
           />
           <q-input
             color="teal"
             outlined
-            v-model="password"
+            v-model="user.passwordInput"
             :type="isPwd ? 'password' : 'text'"
             label="Senha"
             class="q-pb-sm"
@@ -77,7 +83,7 @@
           </q-input>
           <q-input
             no-error-icon
-            v-model="confirmPasswd"
+            v-model="user.confirmPasswdInput"
             outlined
             :type="isPwd ? 'password' : 'text'"
             label="Confirmar Senha"
@@ -92,30 +98,58 @@
           </q-input>
         </q-card-section>
         <q-card-section class="row justify-center q-pa-none q-pb-md">
-          <q-btn rounded color="primary" class="col-10" label="Cadastrar" />
+          <q-btn
+            rounded
+            color="primary"
+            class="col-10"
+            label="Cadastrar"
+            @click="register"
+            @keyup="register"
+          />
         </q-card-section>
       </q-tab-panel>
     </q-tab-panels>
   </q-card>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { reactive } from "vue";
+
 export default {
   setup() {
+    const $store = useStore();
+    const router = useRouter();
     let isPwd = ref(true);
-    let confirmPasswd = ref("");
-    let password = ref("");
-    let email = ref("");
-    let name = ref("");
+
+    let user = reactive({
+      nameInput: "",
+      emailInput: "",
+      passwordInput: "",
+      confirmPasswdInput: "",
+    });
+
     let tab = ref("login");
 
+    async function login() {
+      await $store.dispatch("user/loginAction", user);
+      const token = computed({
+        get: () => $store.state.user.token,
+      });
+      if (token.value) {
+        router.push("/");
+      }
+    }
+    function register() {
+      $store.dispatch("user/registerAction", user);
+    }
     return {
-      name,
-      password,
-      email,
-      confirmPasswd,
+      user,
       isPwd,
       tab,
+      login,
+      register,
     };
   },
 };
