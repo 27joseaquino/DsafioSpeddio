@@ -30,7 +30,7 @@
                 label="SHORT"
                 size="lg"
                 class="q-mr-sm"
-                @click="cadastrarUrl"
+                @click="registerUrl"
               /> </template
           ></q-input>
           <q-dialog v-model="dialog" persistent>
@@ -82,14 +82,15 @@
 
 <script>
 import CardImg from "src/components/LoginPage/CardImg.vue";
-import { ref, reactive, onMounted } from "vue";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 import axios from "axios";
+
 export default {
   name: "IndexPage",
   setup() {
+    const $store = useStore();
     const url = ref("");
-    const count = ref(0);
-    const shortUrl = ref("");
 
     let img1 = ref(
       "https://i.pinimg.com/564x/01/c5/3a/01c53a8a5fca75f0ce72eb97d465be81.jpg"
@@ -105,25 +106,23 @@ export default {
     let text3 = ref(" Reponsivo para qualquer tipo de dispositivo");
     let link = ref("");
     let dialog = ref(false);
+    let isUrl = ref(false);
+    let shortUrl = ref("");
 
-    const cadastrarUrl = async () => {
-      try {
-        const response = await axios.post("http://localhost:3000/url", {
-          link: url.value,
-          count: count.value,
-        });
-        shortUrl.value = response.data.url.shortUrl;
-        console.log(response.data.url.shortUrl);
-        dialog.value = true;
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    function registerUrl() {
+      $store.dispatch("url/shortAction", url);
+      isUrl.value = computed({
+        get: () => $store.state.url.shortUrl.isUrl,
+      });
+      shortUrl.value = computed({
+        get: () => $store.state.url.shortUrl.short,
+      });
+      dialog.value = isUrl.value.value;
+    }
 
     return {
       url,
-      count,
-      cadastrarUrl,
+      registerUrl,
       link,
       img1,
       img2,

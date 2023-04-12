@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import CardLogin from "src/components/LoginPage/CardLogin..vue";
-export default defineComponent({
+import CardLogin from "src/components/LoginPage/CardLogin.vue";
+
+export default {
   components: { CardLogin },
-});
+};
 </script>

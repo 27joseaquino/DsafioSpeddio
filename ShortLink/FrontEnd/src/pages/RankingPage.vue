@@ -1,10 +1,10 @@
 <template>
   <q-page class="column">
-    <div class="col text-h4 text-bold text-center q-mt-md">Ranking</div>
-    <div class="col row justify-center">
+    <div class="col-1 text-h4 text-bold text-center q-mt-md">Ranking</div>
+    <div class="col-11 row justify-center">
       <q-card class="col-11">
         <PositionsRanking
-          v-for="(url, index) in state.urls"
+          v-for="(url, index) in data.urls"
           :key="index"
           :position="index"
           :url="url"
@@ -15,33 +15,34 @@
 </template>
 <script>
 import PositionsRanking from "../components/RankinPage/PositionsRanking.vue";
-import { ref, onMounted, reactive } from "vue";
-import axios from "axios";
+import { onMounted, reactive, computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
   components: { PositionsRanking },
 
   setup() {
-    const state = reactive({
+    const $store = useStore();
+    let data = reactive({
       urls: [],
     });
 
-    const getRanking = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/url");
-        state.urls = response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    function getRanking() {
+      $store.dispatch("url/RankingAction");
+      data.urls = computed({
+        get: () => $store.state.url.urls,
+      });
+    }
 
     onMounted(() => {
-      getRanking();
+      $store.dispatch("url/RankingAction");
+      data.urls = computed({
+        get: () => $store.state.url.urls,
+      });
       setInterval(getRanking, 10000);
     });
 
-    return { state };
+    return { data, getRanking };
   },
 };
 </script>
-PositionsRanking Positions

@@ -20,8 +20,17 @@
               <q-route-tab to="/classificacao" class="text-weight-thin"
                 >Top 100</q-route-tab
               >
-              <q-route-tab to="/entre-ou-cadastre" class="text-weight-thin"
+              <q-route-tab
+                to="/entre-ou-cadastre"
+                v-if="enable"
+                class="text-weight-thin"
                 >Sing-in</q-route-tab
+              >
+              <q-route-tab
+                to="/entre-ou-cadastre"
+                v-if="disable"
+                class="text-weight-thin"
+                >Sair</q-route-tab
               >
             </q-tabs>
           </div>
@@ -41,8 +50,21 @@
               </q-item>
               <q-separator />
 
-              <q-item to="/entre-ou-cadastre" clickable v-close-popup>
+              <q-item
+                to="/entre-ou-cadastre"
+                v-if="enable"
+                clickable
+                v-close-popup
+              >
                 <q-item-section>Sing-in</q-item-section>
+              </q-item>
+              <q-item
+                to="/entre-ou-cadastre"
+                v-if="disable"
+                clickable
+                v-close-popup
+              >
+                <q-item-section>Sair</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -56,7 +78,30 @@
   </q-layout>
 </template>
 
-<script></script>
+<script>
+import { useStore } from "vuex";
+import { computed, ref } from "vue";
+export default {
+  setup() {
+    const $store = useStore();
+    let token = ref("");
+    let disable = ref(false);
+    let enable = ref(true);
+    token.value = computed({
+      get: () => $store.state.user.token,
+    });
+    if (token.value.value) {
+      disable.value = true;
+      enable.value = false;
+    }
+    return {
+      token,
+      disable,
+      enable,
+    };
+  },
+};
+</script>
 <style>
 @media (max-width: 500px) {
   .hidden-on-mobile {
