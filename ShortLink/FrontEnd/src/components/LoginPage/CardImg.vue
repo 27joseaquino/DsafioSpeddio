@@ -11,8 +11,7 @@
 <script>
 export default {
   props: ["link", "text"],
-  setup(props) {
-    console.log(props.link);
+  setup() {
     return {};
   },
 };

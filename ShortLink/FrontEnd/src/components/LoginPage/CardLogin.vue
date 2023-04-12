@@ -42,10 +42,9 @@
           <q-btn
             rounded
             color="primary"
-            @click="login"
+            @click="login()"
             class="col-10"
             label="Entrar"
-            @keyup="login"
           />
         </q-card-section>
       </q-tab-panel>
@@ -133,8 +132,8 @@ export default {
 
     let tab = ref("login");
 
-    function login() {
-      $store.dispatch("user/loginAction", user);
+    async function login() {
+      await $store.dispatch("user/loginAction", user);
       const token = computed({
         get: () => $store.state.user.token,
       });

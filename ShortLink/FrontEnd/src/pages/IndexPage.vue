@@ -6,8 +6,8 @@
       >
         <q-card class="col-xs-12 col-sm-12 col-md-10">
           <div
-            class="text-center text-h4 q-mb-md"
-            style="font-family: Merriweather"
+            class="text-center text-bold text-h4 q-mb-md"
+            style="font-family: Times New Roman, Times, serif"
           >
             <!-- style="font-family: Merriweather" -->
             Copie e cole a URL para ser encurtada
@@ -35,10 +35,16 @@
           ></q-input>
           <q-dialog v-model="dialog" persistent>
             <q-card>
-              <q-card-section class="row items-center">
-                <q-avatar icon="link" color="primary" text-color="white" />Url
-                versão curta
-                <span class="q-ml-sm text-bold"> http://{{ shortUrl }}</span>
+              <q-card-section class="column items-center">
+                <q-avatar
+                  class="q-mb-md"
+                  icon="link"
+                  color="primary"
+                  text-color="white"
+                />Url versão curta
+                <span class="q-ml-sm text-bold col">
+                  http://localhost:3000/{{ shortUrl }}</span
+                >
               </q-card-section>
 
               <q-card-actions align="right">
@@ -51,7 +57,10 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <div class="text-h5 text-bold q-mb-sm flex flex-center">
+        <div
+          class="text-h5 text-bold q-mb-sm flex flex-center"
+          style="font-family: Times New Roman, Times, serif"
+        >
           Encurte e Compartilhe
         </div>
         <div class="text-body1 flex flex-center">
@@ -84,7 +93,6 @@
 import CardImg from "src/components/LoginPage/CardImg.vue";
 import { ref, computed, reactive } from "vue";
 import { useStore } from "vuex";
-import axios from "axios";
 
 export default {
   name: "IndexPage",
@@ -108,22 +116,20 @@ export default {
     let text2 = ref("Faça quantas URL's quiser gratuitamente");
     let text3 = ref(" Reponsivo para qualquer tipo de dispositivo");
     let dialog = ref(false);
-    let isUrl = ref(false);
-    let shortUrl = ref("");
 
     url.token = computed({
       get: () => $store.state.user.token,
     });
+    let shortUrl = computed({
+      get: () => $store.state.url.shortUrl.short,
+    });
+    let isUrl = computed({
+      get: () => $store.state.url.shortUrl.isUrl,
+    });
+    async function registerUrl() {
+      await $store.dispatch("url/shortAction", url);
 
-    function registerUrl() {
-      $store.dispatch("url/shortAction", url);
-      isUrl.value = computed({
-        get: () => $store.state.url.shortUrl.isUrl,
-      });
-      shortUrl.value = computed({
-        get: () => $store.state.url.shortUrl.short,
-      });
-      dialog.value = isUrl.value.value;
+      dialog.value = isUrl.value;
     }
 
     return {
@@ -144,7 +150,7 @@ export default {
 </script>
 <style scoped>
 @font-face {
-  font-family: Merriweather;
+  font-family: tnrs;
   src: url(../assets/fonts/Merriweather/Merriweather-BlackItalic.ttf);
 }
 </style>

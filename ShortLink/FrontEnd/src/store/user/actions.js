@@ -19,6 +19,12 @@ export async function loginAction(context, user) {
     }
   } catch (error) {
     console.error(error);
+    Notify.create({
+      type: "negative",
+      message: error.response.data.msg,
+      timeout: 2000,
+      position: "top-right",
+    })
   }
 }
 export async function registerAction(context, user) {

@@ -17,18 +17,18 @@ export async function shortAction(context, url) {
   };
   try {
     const response = await axios.post("http://localhost:3000/", {
-      link: url.value,
+      link: url.link,
       count: 0,
     }, config);
 
     context.commit("setShortUrlMutation", response.data.url.shortUrl)
   } catch (error) {
-    console.error(error);
-    Notify.create({
-      type: "negative",
-      message: error.response.data.msg,
-      timeout: 2000,
-      position: "top-right",
-    });
+    console.log(error);
+    // Notify.create({
+    //   type: "negative",
+    //   message: error.response.data.msg,
+    //   timeout: 2000,
+    //   position: "top-right",
+    // });
   }
 };
