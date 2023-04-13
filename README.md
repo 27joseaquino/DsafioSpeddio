@@ -41,6 +41,6 @@ Algumas partes do código que poderiam ser melhoradas com mais tempo disponível
 - Testes unitários e e2e
  
  # Vídeo de explicação da aplicação.
- - obs: Dados sensíveis estão expostos no backend pq ñ utilizei o .env e o git ignore com o intuito de agilizar o teste do projeto. 
+ - obs: Dados sensíveis estão expostos no backend porque não utilizei o .env e o git ignore com o intuito de agilizar o teste do projeto. 
  https://share.vidyard.com/watch/qNCYH7mPqQNDr3ecZfo8nr?
  
